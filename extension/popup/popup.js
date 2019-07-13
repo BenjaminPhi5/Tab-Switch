@@ -39,6 +39,18 @@ window.addEventListener('load', function load(event) {
               });
         }
 
+        // close a tab (and remove it from the popup)
+        function removeTab(tabId){
+            // close the tab
+            chrome.tabs.remove(tabId, function(){
+                // if the tab is in the popup, remove it
+                if(tabsMap.has(tabId)){
+                    // remove the tab info and the hr line below it
+                    container.removeChild(tabsMap.get(tabId));
+                    container.removeChild(document.getElementById("hr" + String(tabId)));
+                }
+            });
+        }
 
         // generates a html grid and adds it to the popup
         function generateGrid(title, faviconUrl, muted, tabid, windowId){
@@ -69,6 +81,11 @@ window.addEventListener('load', function load(event) {
                 switchTab(tabid, windowId);
             }
 
+            // and the remove tab onclick
+            closeButton.onclick = function(){
+                removeTab(tabid);
+            }
+
             buttonsHolder.appendChild(muteButton);
             buttonsHolder.appendChild(closeButton);
             
@@ -79,7 +96,7 @@ window.addEventListener('load', function load(event) {
             
 
             // add the tab info to the map and the popup
-            tabsMap.set(tabid, {html: tabInfo, windowId: windowId});
+            tabsMap.set(tabid, tabInfo);
             container.appendChild(tabInfo);
             container.appendChild(line);
         }
