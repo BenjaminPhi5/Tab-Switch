@@ -46,9 +46,19 @@ window.addEventListener('load', function load(event) {
                 // if the tab is in the popup, remove it
                 if(tabsMap.has(tabId)){
                     // remove the tab info and the hr line below it
-                    container.removeChild(tabsMap.get(tabId).html);
+                    container.removeChild(tabsMap.get(tabId));
                     container.removeChild(document.getElementById("hr" + String(tabId)));
                 }
+            });
+        }
+
+        // mute/unmute a tab by setting its mute status
+        function toggleMute(tabId){
+            chrome.tabs.get(tabId, function(tab){
+                // set the muted text of the button
+                document.getElementById(String(tabId) + "mute").innerHTML =
+                    tab.mutedInfo.muted ? "mute" : "unmute";
+                chrome.tabs.update(tabId, {muted: !tab.mutedInfo.muted});
             });
         }
 
@@ -69,9 +79,11 @@ window.addEventListener('load', function load(event) {
             logo.className = "logo";
             titleDiv.innerHTML = title.substring(0, 90);
             titleDiv.className = "titlediv";
+            titleDiv.id = String(tabid) + "title";
             buttonsHolder.className = "buttons-holder";
             muteButton.innerHTML = muted ? "unmute" : "mute";
             muteButton.className = "buttons mute-button";
+            muteButton.id = String(tabid) + "mute";
             closeButton.src = "res/close48.png";
             closeButton.className = "close";
             line.id = "hr" + String(tabid);
@@ -86,6 +98,11 @@ window.addEventListener('load', function load(event) {
                 removeTab(tabid);
             }
 
+            // add the mute toggle onclick
+            muteButton.onclick = function(){
+                toggleMute(tabid);
+            }
+
             buttonsHolder.appendChild(muteButton);
             buttonsHolder.appendChild(closeButton);
             
@@ -96,7 +113,7 @@ window.addEventListener('load', function load(event) {
             
 
             // add the tab info to the map and the popup
-            tabsMap.set(tabid, {html: tabInfo, title: titleDiv});
+            tabsMap.set(tabid, tabInfo);
             container.appendChild(tabInfo);
             container.appendChild(line);
         }
@@ -104,7 +121,7 @@ window.addEventListener('load', function load(event) {
         // update popup sliders with pages updated titles.
         chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab){
             if(changeInfo.title){
-                tabsMap.get(tabid).title.innerHTML = changeInfo.title.substring(0, 90);
+                document.getElementById(String(tabid) + "title").innerHTML = changeInfo.title.substring(0, 90);
             }
         });
     });
@@ -122,3 +139,8 @@ window.addEventListener('load', function load(event) {
 // just have the thing at the top with maybe the logo or something that looks nice sort it out
 
 // on switching tabs hide the window
+
+
+// need to include a tab being muted when the popup is open
+// if a tab is opened while the popup is open
+// if a tab is closed while the popup is open
