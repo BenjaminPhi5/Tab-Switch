@@ -30,7 +30,7 @@ window.addEventListener('load', function load(event) {
 
         // generates a html grid and adds it to the popup
         function generateGrid(title, faviconUrl, muted, tabid){
-            let tabInfo = document.createElement("li");
+            let tabInfo = document.createElement("div");
             let logo = document.createElement("img");
             let titleLabel = document.createElement("label");
             let muteButton = document.createElement("button");
@@ -39,9 +39,13 @@ window.addEventListener('load', function load(event) {
             tabInfo.className = "tabinfo";
             tabInfo.setAttribute("tab-id",String(tabid));
             logo.src = faviconUrl;
+            logo.className = "logo";
             titleLabel.innerHTML = title;
+            titleLabel.className = "title";
             muteButton.innerHTML = muted ? "unmute" : "mute";
+            muteButton.className = "buttons mute-button";
             closeButton.src = "res/close48.png";
+            closeButton.className = "buttons close-button";
             
             tabInfo.appendChild(logo);
             tabInfo.appendChild(titleLabel);
@@ -62,3 +66,5 @@ window.addEventListener('load', function load(event) {
 // need to deal with cross site scripting issues from titles but other from that fine.
 
 // need to update a tabs favicon and title when a tab reloads okay.
+
+// don't forget to load a nice fancy google font.
