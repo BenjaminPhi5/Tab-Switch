@@ -56,8 +56,10 @@ window.addEventListener('load', function load(event) {
         function toggleMute(tabId){
             chrome.tabs.get(tabId, function(tab){
                 // set the muted text of the button
-                document.getElementById(String(tabId) + "mute").innerHTML =
-                    tab.mutedInfo.muted ? "mute" : "unmute";
+                document.getElementById(String(tabId) + "mute").style =
+                    tab.mutedInfo.muted ? 
+                    "color: #20bf6b !important;border: 1px solid #20bf6b !important;" :
+                    "color: #ff4112 !important;border: 2px solid #ff4112 !important;"
                 chrome.tabs.update(tabId, {muted: !tab.mutedInfo.muted});
             });
         }
@@ -81,8 +83,8 @@ window.addEventListener('load', function load(event) {
             titleDiv.className = "titlediv";
             titleDiv.id = String(tabid) + "title";
             buttonsHolder.className = "buttons-holder";
-            muteButton.innerHTML = muted ? "unmute" : "mute";
-            muteButton.className = "buttons mute-button";
+            muteButton.innerHTML = "mute";
+            muteButton.className = "mute-button";
             muteButton.id = String(tabid) + "mute";
             closeButton.src = "res/close48.png";
             closeButton.className = "close";
@@ -101,6 +103,11 @@ window.addEventListener('load', function load(event) {
             // add the mute toggle onclick
             muteButton.onclick = function(){
                 toggleMute(tabid);
+            }
+
+            // set the mute buttons colour
+            if(muted){
+                muteButton.style = "color: #ff4112 !important;border: 2px solid #ff4112 !important;"
             }
 
             buttonsHolder.appendChild(muteButton);

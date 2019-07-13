@@ -47,6 +47,27 @@ titlediv {
     width: 10px;
     padding-left: 8px;
 }
+
+/* Styling the mute button */
+.mute-button {
+    color: #20bf6b !important;
+    background: #ffffff;
+    padding: 3px;
+    border: 1px solid #20bf6b !important;
+    border-radius: 6px;
+    display: inline-block;
+}
+    
+.mute-button:hover {
+    color: #12b8ff !important;
+    border-radius: 50px;
+    border-color: #12b8ff !important;
+    transition: all 0.3s ease 0s;
+}
+
+.mute-button:focus {
+    outline: none;
+  }
   
   /* style the horizontal line between the tab info */
 hr {
