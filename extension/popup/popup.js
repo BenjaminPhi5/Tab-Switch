@@ -33,15 +33,15 @@ window.addEventListener('load', function load(event) {
             let tabInfo = document.createElement("li");
             let logo = document.createElement("img");
             let titleLabel = document.createElement("label");
-            let muteButton = document.createElement("img");
+            let muteButton = document.createElement("button");
             let closeButton = document.createElement("img");
 
             tabInfo.className = "tabinfo";
             tabInfo.setAttribute("tab-id",String(tabid));
             logo.src = faviconUrl;
             titleLabel.innerHTML = title;
-            muteButton.src = "../icons/32.png";
-            closeButton.src = "../icons/32.png";
+            muteButton.innerHTML = muted ? "unmute" : "mute";
+            closeButton.src = "res/close48.png";
             
             tabInfo.appendChild(logo);
             tabInfo.appendChild(titleLabel);
