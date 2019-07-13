@@ -59,7 +59,7 @@ window.addEventListener('load', function load(event) {
                 document.getElementById(String(tabId) + "mute").style =
                     tab.mutedInfo.muted ? 
                     "color: #20bf6b !important;border: 1px solid #20bf6b !important;" :
-                    "color: #ff4112 !important;border: 2px solid #ff4112 !important;"
+                    "color: #ff4112 !important;border: 1px solid #ff4112 !important;"
                 chrome.tabs.update(tabId, {muted: !tab.mutedInfo.muted});
             });
         }
@@ -107,7 +107,7 @@ window.addEventListener('load', function load(event) {
 
             // set the mute buttons colour
             if(muted){
-                muteButton.style = "color: #ff4112 !important;border: 2px solid #ff4112 !important;"
+                muteButton.style = "color: #ff4112 !important;border: 1px solid #ff4112 !important;"
             }
 
             buttonsHolder.appendChild(muteButton);
