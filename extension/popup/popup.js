@@ -22,14 +22,26 @@ window.addEventListener('load', function load(event) {
         // map of currently held tabs
         tabsMap = new Map();
 
+        // setup a html element for each tab
         tabs.forEach(tab => {
             console.log("current tab iteration: ", tab);
             // add the tabs info to the popup
-            generateGrid(tab.title, tab.favIconUrl || Config.DEFAULT_FAVICON, tab.mutedInfo.muted);
+            generateGrid(tab.title, tab.favIconUrl || Config.DEFAULT_FAVICON,
+                tab.mutedInfo.muted, tab.id, tab.windowId);
         });
 
+
+        // switch which tab the user can see.
+        function switchTab(tabId, windowId){
+            // set the tab and window to be active/focused
+            chrome.tabs.update(tabId, {active: true}, function () {
+                chrome.windows.update(windowId, {focused: true});
+              });
+        }
+
+
         // generates a html grid and adds it to the popup
-        function generateGrid(title, faviconUrl, muted, tabid){
+        function generateGrid(title, faviconUrl, muted, tabid, windowId){
             let tabInfo = document.createElement("div");
             let logo = document.createElement("img");
             let titleDiv = document.createElement("div");
@@ -38,6 +50,7 @@ window.addEventListener('load', function load(event) {
             let closeButton = document.createElement("img");
             let line = document.createElement("hr");
 
+            // setup the html tags' info
             tabInfo.className = "tabinfo";
             tabInfo.setAttribute("tab-id",String(tabid));
             logo.src = faviconUrl;
@@ -51,16 +64,22 @@ window.addEventListener('load', function load(event) {
             closeButton.className = "close";
             line.id = "hr" + String(tabid);
 
+            // add the switching onclick
+            titleDiv.onclick = function(){
+                switchTab(tabid, windowId);
+            }
+
             buttonsHolder.appendChild(muteButton);
             buttonsHolder.appendChild(closeButton);
             
+            // add all the html to the popup
             tabInfo.appendChild(logo);
             tabInfo.appendChild(titleDiv);
             tabInfo.appendChild(buttonsHolder);
             
 
             // add the tab info to the map and the popup
-            tabsMap.set(tabid, tabInfo);
+            tabsMap.set(tabid, {html: tabInfo, windowId: windowId});
             container.appendChild(tabInfo);
             container.appendChild(line);
         }
@@ -77,3 +96,5 @@ window.addEventListener('load', function load(event) {
 
 // don't forget to load a nice fancy google font.
 // just have the thing at the top with maybe the logo or something that looks nice sort it out
+
+// on switching tabs hide the window
