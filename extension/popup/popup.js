@@ -46,7 +46,7 @@ window.addEventListener('load', function load(event) {
                 // if the tab is in the popup, remove it
                 if(tabsMap.has(tabId)){
                     // remove the tab info and the hr line below it
-                    container.removeChild(tabsMap.get(tabId));
+                    container.removeChild(tabsMap.get(tabId).html);
                     container.removeChild(document.getElementById("hr" + String(tabId)));
                 }
             });
@@ -96,10 +96,17 @@ window.addEventListener('load', function load(event) {
             
 
             // add the tab info to the map and the popup
-            tabsMap.set(tabid, tabInfo);
+            tabsMap.set(tabid, {html: tabInfo, title: titleDiv});
             container.appendChild(tabInfo);
             container.appendChild(line);
         }
+
+        // update popup sliders with pages updated titles.
+        chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab){
+            if(changeInfo.title){
+                tabsMap.get(tabid).title.innerHTML = changeInfo.title.substring(0, 90);
+            }
+        });
     });
 });
 
