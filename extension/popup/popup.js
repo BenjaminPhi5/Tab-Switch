@@ -32,29 +32,37 @@ window.addEventListener('load', function load(event) {
         function generateGrid(title, faviconUrl, muted, tabid){
             let tabInfo = document.createElement("div");
             let logo = document.createElement("img");
-            let titleLabel = document.createElement("label");
+            let titleDiv = document.createElement("div");
+            let buttonsHolder = document.createElement("div");
             let muteButton = document.createElement("button");
             let closeButton = document.createElement("img");
+            let line = document.createElement("hr");
 
             tabInfo.className = "tabinfo";
             tabInfo.setAttribute("tab-id",String(tabid));
             logo.src = faviconUrl;
             logo.className = "logo";
-            titleLabel.innerHTML = title;
-            titleLabel.className = "title";
+            titleDiv.innerHTML = title.substring(0, 90);
+            titleDiv.className = "titlediv";
+            buttonsHolder.className = "buttons-holder";
             muteButton.innerHTML = muted ? "unmute" : "mute";
             muteButton.className = "buttons mute-button";
             closeButton.src = "res/close48.png";
-            closeButton.className = "buttons close-button";
+            closeButton.className = "close";
+            line.id = "hr" + String(tabid);
+
+            buttonsHolder.appendChild(muteButton);
+            buttonsHolder.appendChild(closeButton);
             
             tabInfo.appendChild(logo);
-            tabInfo.appendChild(titleLabel);
-            tabInfo.appendChild(muteButton);
-            tabInfo.appendChild(closeButton);
+            tabInfo.appendChild(titleDiv);
+            tabInfo.appendChild(buttonsHolder);
+            
 
             // add the tab info to the map and the popup
             tabsMap.set(tabid, tabInfo);
             container.appendChild(tabInfo);
+            container.appendChild(line);
         }
     });
 });
@@ -68,3 +76,4 @@ window.addEventListener('load', function load(event) {
 // need to update a tabs favicon and title when a tab reloads okay.
 
 // don't forget to load a nice fancy google font.
+// just have the thing at the top with maybe the logo or something that looks nice sort it out

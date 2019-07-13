@@ -1,4 +1,57 @@
 /* css for the popup */
 body {
+	/* font and width of popup */
     font-family: 'Comfortaa', cursive;
+    font-size: 11px;
+    width: 4in;
+}
+
+/* the text at the top */
+.top {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+  }
+
+/* holder for each tab */
+.tabinfo {
+    height: 25px;
+    /* turns tabinfo into a grid, three columns*/
+    display: grid;
+    grid-template-columns: 25px 3in 100px;
+    align-items: center;
+}
+
+/* the name of the tab */
+titlediv {
+    height: 25px;
+    line-height: 25px;
+}
+
+/* width of the logo in popup */
+.logo {
+    width:20px;
+    height: 20px;
+    padding: 3px 0px;
+} 
+
+/* the close and mute buttons */
+.buttons-holder{
+    /* put the buttons on the right*/
+    float: right;
+    padding: 5px 10px;
+}
+
+/* the x button */
+.close {
+    width: 10px;
+    padding-left: 8px;
+}
+  
+  /* style the horizontal line between the tab info */
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, rgb(250, 187, 187), rgb(206, 0, 0), rgb(250, 187, 187));
 }
